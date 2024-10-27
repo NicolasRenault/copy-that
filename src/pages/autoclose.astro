@@ -1,0 +1,27 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Auto Close</title>
+    </head>
+    <body>
+        <main>
+            <h1>Auto Close</h1>
+            <p>
+                You should see a popup alert and the page should close automatically.
+            </p>
+        </main>
+    </body>
+    <script>
+        const url = new URL(window.location.href);
+        const value = url.searchParams.get("text");
+        if (value) {
+            alert("Copied to clipboard: " + value);
+            navigator.clipboard.writeText(value);
+            close();
+        }
+    </script>
+</html>
