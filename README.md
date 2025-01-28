@@ -16,11 +16,11 @@ Project by Nicolas Renault.
 
 Simply add your text to the URL as a query parameter:
 
-Example: `https://copy.nicolasrenault.com/?text=Your text here`
+Example: `https://copy-that.nicolasrenault.com/?text=Your text here`
 
 You can also use the `/autoclose` page to close the browser page automatically.
 
-Example: `https://copy.nicolasrenault.com/autoclose/?text=Your text here`
+Example: `https://copy-that.nicolasrenault.com/autoclose/?text=Your text here`
 
 ## License
 
