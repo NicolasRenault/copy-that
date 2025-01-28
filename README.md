@@ -1,6 +1,5 @@
 [![Built with Astro](https://astro.badg.es/v2/built-with-astro/tiny.svg)](https://astro.build)
-<!-- TODO Change with the correct netlify badge -->
-[![Netlify Status](https://api.netlify.com/api/v1/badges/15bf0891-f6f1-4d4c-af64-c293373e5fb1/deploy-status)](https://app.netlify.com/sites/preeminent-taffy-43c8eb/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/431bf150-3be1-4e4f-8c91-8c80b91b8429/deploy-status)](https://app.netlify.com/sites/stately-parfait-90d4a7/deploys)
 
 # Copy That
 
