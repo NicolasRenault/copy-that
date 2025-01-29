@@ -3,7 +3,7 @@
 
 # Copy That
 
-**Copy That** is a simple website to copy text to your clipboard from a URL. It can be used to share text on software that cannot access the clipboard directly but can open links.
+**Copy That** is a simple website to copy text to your clipboard from a URL. It can be used to share text from software that cannot access the clipboard directly but can open links.
 
 This website **does not** store any data. It simply reads the text from the URL and pastes it on your clipboard.
 
