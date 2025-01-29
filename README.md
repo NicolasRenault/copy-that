@@ -13,10 +13,10 @@ Project by Nicolas Renault.
 
 ## How to use: 
 
-Simply add your text to the URL as a query parameter:
+Simply add your text to the URL as a query parameter.
 
-Example: `https://copy-that.nicolasrenault.com/?text=Your text here`
+Example: `https://copy-that.nicolasrenault.com/?text=That text here`
 
 ## License
 
-[MIT](https://github.com/NicolasRenault/portfolio/blob/main/LICENCE) © [Nicolas Renault](https://github.com/NicolasRenault)
+[MIT](https://github.com/NicolasRenault/copy-that/blob/main/LICENSE) © [Nicolas Renault](https://github.com/NicolasRenault)

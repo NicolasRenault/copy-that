@@ -7,10 +7,8 @@
 		<meta charset="UTF-8" />
 		<meta name="description" content="Clipboard text copy website" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Copy That | NRE</title>
-
 		<link
 		rel="icon"
 		href="https://cdn.nicolasrenault.com/logo/NR_logo_light_96x96.ico"
@@ -31,12 +29,17 @@
 		</noscript>
 		<main>
 			<h1>Copy that</h1>
-			<div id="copy-container">
-				<p>Here is your text:</p>
-				<strong id="copied-text"></strong>
-				<button id="copy-button">Copy</button>
+			<div id="main-container">
+				<div id="copy-container">
+					<p>Here is your text:</p>
+					<strong id="copied-text">That text</strong>
+					<button id="copy-button" title="Copy That text">Copy That</button>
+				</div>
+				<div id="error-container">
+					<p id="error-message"></p>
+				</div>
 			</div>
-			<div id="instructions">
+			<div id="instructions-container">
 				<p><strong>Copy That</strong> is a simple website to copy text to your clipboard from a URL. It can be used to share text on software that cannot access the clipboard directly but can open links.</p>
 				<p>This website <strong>DO NOT</strong> store any data. It simply reads the text from the URL and pastes it on your clipboard.</p>
 				<p>
@@ -44,10 +47,10 @@
 					<span>The project is under the <a href="https://github.com/NicolasRenault/copy-that/blob/main/LICENSE" target="_blank" rel="noopener">MIT licence</a>.</span><br />
 					<span>Project by <a href="https://nicolasrenault.com" target="_blank" rel="noopener">Nicolas Renault</a>.</span>
 				</p>
-				<div id="documentation">
-					<p>How to use:</p>
-					<p>Simply add your text to the URL as a query parameter:</p>
-					<p>Example: <code>https://copy-that.nicolasrenault.com/?text=Your text here</code></p>
+				<div id="documentation-container">
+					<h3>How to use:</h3>
+					<p>Simply add your text to the URL as a query parameter.</p>
+					<p>Example: <code>https://copy-that.nicolasrenault.com/?text=That text here</code></p>
 				</div>
 			</div>
 		</main>
@@ -81,27 +84,41 @@
 	}
 	h1 {
 		font-size: 4rem;
-		font-weight: 700;
 		line-height: 1;
 		text-align: center;
 		margin-bottom: 1em;
+	}
+
+	#main-container {
+		margin-bottom: 2rem;
+		padding-bottom: 10%;
+		border-bottom: 1px solid rgba(var(--accent-light), 25%);
 	}
 
 	#copy-container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		margin-bottom: 2rem;
-		padding-bottom: 15%;
-		border-bottom: 1px solid rgba(var(--accent-light), 25%);
 	}
 	#copied-text {
-		font-size: 1.5rem;
-		font-weight: 700;
 		margin: 1rem 0;
 		padding: 1rem;
+		padding-bottom: 0;
+
+		min-width: 50%;
+		min-height: 3rem;
+		max-width: 100%;
+		max-height: 50vh;
+
 		border: 1px solid rgba(var(--accent-light), 25%);
 		border-radius: 8px;
+
+		text-align: center;
+		font-size: 1.5rem;
+
+		overflow-wrap: break-word;
+		overflow-y: auto;
+		hyphens: auto;
 	}
 	#copy-button {
 		background: rgba(var(--accent-light), 30%);
@@ -120,8 +137,22 @@
 		background: rgba(var(--accent-light), 50%);
 		transform: translateY(0);
 	}
+	#copy-button.success {
+		background: none;
+		color: rgb(64, 187, 8);
+		font-weight: bolder;
+		transform: translateY(0);
+	}
 
-	#instructions code {
+	#error-container {
+		display: none;
+		padding: 1rem;
+		background: rgba(255, 0, 0, 0.1);
+		border: 1px solid rgba(255, 0, 0, 0.5);
+		border-radius: 8px;
+	}
+
+	#instructions-container code {
 		font-size: 0.8em;
 		font-weight: bold;
 		background: rgba(var(--accent-light), 12%);
@@ -129,14 +160,14 @@
 		border-radius: 4px;
 		padding: 0.3em 0.4em;
 	}
-	#instructions p:last-child {
+	#instructions-container p:last-child {
 		margin-bottom: 0;
 	}
-	#instructions a {
+	#instructions-container a {
 		color: rgb(var(--accent-light));
 	}
 
-	#documentation {
+	#documentation-container {
 		margin-top: 2rem;
 		border-top: 1px solid rgba(var(--accent-light), 25%);
 	}
@@ -164,15 +195,12 @@
 		try {
 			navigator.clipboard.writeText(value);
 		} catch (error) {
-			alert("Error copying text to clipboard:");
-			//TODO Handling
-
+			handleError("Error copying text to clipboard: " + error.message);
 		}
 		
 		if (copiedTextElement) copiedTextElement.textContent = value;
 	} else {
-		alert("No text to copy");
-		//TODO Handling
+		handleError("No text found in URL. Please refer to the documentation below.");
 	}
 
 	if (copyButton) {
@@ -180,10 +208,37 @@
 			if (value) {
 				try {
 					navigator.clipboard.writeText(value);
+					handleCopySuccess();
 				} catch (error) {
-					//TODO Handling
+					handleError("Error copying text to clipboard: " + error.message);
 				}
+			} else {
+				handleError("Error copying text to clipboard: No text found in URL.");
 			}
 		});
+	}
+
+	function handleError(message) {
+		const copyContainer = document.getElementById("copy-container");
+		const errorContainer = document.getElementById("error-container");
+		const errorMessage = document.getElementById("error-message");
+		
+		if (copyContainer) copyContainer.style.display = "none";
+		if (errorContainer) errorContainer.style.display = "block";
+		if (errorMessage) errorMessage.textContent = message;
+	}
+
+	function handleCopySuccess() {
+		const copyButton = document.getElementById("copy-button");
+		if (copyButton) {
+			copyButton.classList.add("success");
+			copyButton.textContent = "That text has been copied to clipboard!";
+
+			setTimeout(() => {
+				copyButton.classList.remove("success");
+				copyButton.textContent = "Copy That";
+			}, 2500);
+		} 
+		
 	}
 </script>
