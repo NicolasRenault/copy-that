@@ -17,10 +17,6 @@ Simply add your text to the URL as a query parameter:
 
 Example: `https://copy-that.nicolasrenault.com/?text=Your text here`
 
-You can also use the `/autoclose` page to close the browser page automatically.
-
-Example: `https://copy-that.nicolasrenault.com/autoclose/?text=Your text here`
-
 ## License
 
 [MIT](https://github.com/NicolasRenault/portfolio/blob/main/LICENCE) © [Nicolas Renault](https://github.com/NicolasRenault)
